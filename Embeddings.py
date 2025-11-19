@@ -1,8 +1,10 @@
+#Embedding: nur Text, nur Bedeutung und Text + Erklärung
+
 import argparse, json, sys
 from pathlib import Path
 import numpy as np, pandas as pd
 from sentence_transformers import SentenceTransformer
-import mteb
+
 
 
 # 1. Hilfsfunktion: JSON-Datei laden und vorbereiten
@@ -76,55 +78,16 @@ def save_csv(df: pd.DataFrame, embs: dict[str, np.ndarray], out_dir: Path):
 
     print(f"[Save] CSV-Dateien gespeichert unter {out_dir.resolve()}")
 
-
-# 4. STS-Benchmark (MTEB)
-
-def run_sts(model: SentenceTransformer, task: str, bs: int, norm: bool, out_dir: Path | None):
-    """
-    Führt den STS-Benchmark (Semantic Textual Similarity) über MTEB aus.
-    Standard: STS22.v2 (englisch, klein & schnell).
-    """
-    tasks = mteb.get_tasks(tasks=[task])
-    if not tasks:
-        print(f"[MTEB] Task '{task}' nicht gefunden – abgebrochen.")
-        return
-
-    print(f"[MTEB] Starte Evaluation: {task}")
-    results = mteb.evaluate(
-        model,
-        tasks,
-        encode_kwargs={"batch_size": bs, "normalize_embeddings": norm},
-    )
-
-    # Ergebnisse speichern 
-    if out_dir:
-        (out_dir / "mteb_results").mkdir(parents=True, exist_ok=True)
-        rows = [
-            {
-                "task_name": r.task_name,
-                "main_score": getattr(r.task.metadata, "main_score", None),
-                "score": getattr(r, "get_score", lambda: None)(),
-            }
-            for r in results
-        ]
-        pd.DataFrame(rows).to_csv(out_dir / "mteb_results" / "summary.csv", index=False, encoding="utf-8")
-        print(f"[MTEB] Ergebnisse gespeichert unter {(out_dir/'mteb_results').resolve()}")
-
-
-
 # 5. Argumente (CLI)
 
 def parse_args():
-    #Definiert alle verfügbaren Befehlszeilenargumente.
-    p = argparse.ArgumentParser(description="Embeddings (3 Varianten) + STS (MTEB)")
-    p.add_argument("--input_json", default="train.json", help="Pfad zur Eingabedatei (z. B. dev.json oder train.json)")
-    p.add_argument("--model_name", default="sentence-transformers/all-MiniLM-L6-v2", help="HuggingFace-Modellname")
-    p.add_argument("--batch_size", type=int, default=64, help="Batchgröße für Encoding")
-    p.add_argument("--no_normalize", action="store_true", help="L2-Normalisierung deaktivieren")
-    p.add_argument("--out_dir", default="embeddings_out", help="Ausgabeordner für CSV-Dateien")
-    p.add_argument("--no_save", action="store_true", help="Keine Dateien speichern")
-    p.add_argument("--sts_task", default="STS22.v2", help="MTEB-Taskname (z. B. STS22.v2 oder STS17)")
-    p.add_argument("--no_sts", action="store_true", help="STS-Benchmark überspringen")
+    p = argparse.ArgumentParser(description="Embeddings (3 Varianten)")
+    p.add_argument("--input_json", default="train.json")
+    p.add_argument("--model_name", default="sentence-transformers/all-MiniLM-L6-v2")
+    p.add_argument("--batch_size", type=int, default=64)
+    p.add_argument("--no_normalize", action="store_true")
+    p.add_argument("--out_dir", default="embeddings_out")
+    p.add_argument("--no_save", action="store_true")
     return p.parse_args()
 
 
@@ -146,9 +109,7 @@ def main():
     if not args.no_save:
         save_csv(df, embs, Path(args.out_dir))
 
-    # STS-Benchmark ausführen
-    if not args.no_sts:
-        run_sts(model, args.sts_task, args.batch_size, norm, None if args.no_save else Path(args.out_dir))
+ 
 
     print("✓ Fertig.")
 
