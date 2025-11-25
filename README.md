@@ -21,3 +21,7 @@ Embeddings (meaning included in text) + Linear Regression:
 Embeddings (meaning included in text) + SVC:
 
 {"accuracy": 0.5357142857142857, "spearman": 0.05264041844071247}
+
+Correlation for label average vs cosine similarity:
+
+0.26805305386871225
