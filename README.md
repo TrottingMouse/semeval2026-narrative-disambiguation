@@ -29,3 +29,7 @@ Correlation for label average vs cosine similarity:
 Surprisal:
 
 {"accuracy": 0.5697278911564626, "spearman": -0.11527990914334803}
+
+Finetuning:
+
+{"accuracy": 0.5867346938775511, "spearman": 0.2224133794706723}
