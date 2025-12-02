@@ -4,6 +4,16 @@ Refer to format and evaluation script here:
 
 https://github.com/Janosch-Gehring/semeval26-05-scripts
 
+
+## Methods
+
+* Jan, Sarah: (Finetune) Embeddings -> Lineare Regression -> runden
+* Jan, Sarah: (Finetune) Embeddings -> Klassifikation
+* Daniel: Embeddings -> 5 binäre Klassifikatoren -> durchschnittliches gewichtetes Gesamtergebnis
+* Julio: meaning an Wort -> Surprisal -> 
+* Matthias: ähnliche Begriffe dazu -> andere Methoden
+
+
 ## Current results
 Baseline (random):
 
