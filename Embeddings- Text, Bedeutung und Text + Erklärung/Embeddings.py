@@ -83,7 +83,6 @@ def save_csv(df: pd.DataFrame, embs: dict[str, np.ndarray], out_dir: Path):
 def parse_args():
     p = argparse.ArgumentParser(description="Embeddings (3 Varianten)")
     p.add_argument("--input_json", default="train.json")
-    p.add_argument("--model_name", default="sentence-transformers/all-MiniLM-L6-v2")
     p.add_argument("--batch_size", type=int, default=64)
     p.add_argument("--no_normalize", action="store_true")
     p.add_argument("--out_dir", default="embeddings_out")
@@ -95,7 +94,7 @@ def parse_args():
 def main():
     args = parse_args()
     df = load_json(args.input_json)
-    model = SentenceTransformer(args.model_name)
+    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
     norm = not args.no_normalize
 
     # Embeddings berechnen (alle 3 Varianten)
@@ -117,4 +116,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
