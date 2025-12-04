@@ -10,7 +10,7 @@ https://github.com/Janosch-Gehring/semeval26-05-scripts
 * Jan, Sarah: (Finetune) Embeddings -> Lineare Regression -> runden
 * Jan, Sarah: (Finetune) Embeddings -> Klassifikation
 * Daniel: Embeddings -> 5 binäre Klassifikatoren -> durchschnittliches gewichtetes Gesamtergebnis
-* Julio: meaning an Wort -> Surprisal -> 
+* Julio: meaning an Wort -> Surprisal & Similarity Score -> 
 * Matthias: ähnliche Begriffe dazu -> andere Methoden
 
 
