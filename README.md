@@ -40,6 +40,8 @@ Surprisal:
 
 {"accuracy": 0.5697278911564626, "spearman": -0.11527990914334803}
 
+{"accuracy": 0.477891156462585, "spearman": -0.0819439441233343}
+
 Finetuning:
 
 {"accuracy": 0.5918367346938775, "spearman": 0.2101613315469357}
