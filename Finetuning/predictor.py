@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-MODEL_PATH = "dbert_ftuning"
+MODEL_PATH = "dbert_finetuning"
 DEV_JSON = "dev.json"
 OUTPUT_JSONL = "predictions_fin.jsonl"
 
