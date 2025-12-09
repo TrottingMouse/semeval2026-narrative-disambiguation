@@ -9,7 +9,7 @@ https://github.com/Janosch-Gehring/semeval26-05-scripts
 
 * Jan, Sarah: (Finetune) Embeddings -> Lineare Regression -> runden
 * Jan, Sarah: (Finetune) Embeddings -> Klassifikation
-* Daniel: Embeddings -> 5 binäre Klassifikatoren -> durchschnittliches gewichtetes Gesamtergebnis
+* Daniel: Embeddings -> 5 binäre Klassifikatoren -> durchschnittliches gewichtetes Gesamtergebnis | neu: 4 binäre Klassifikatoren mit größer gleich Klasse (Ausnutzen der Ordnung)
 * Julio: meaning an Wort -> Surprisal & Similarity Score -> 
 * Matthias: ähnliche Begriffe dazu -> andere Methoden
 
@@ -35,6 +35,14 @@ Embeddings (meaning included in text) + SVC:
 Correlation for label average vs cosine similarity:
 
 0.26805305386871225
+
+Binary classifiers without meta classifier:
+
+{"accuracy": 0.5255102040816326, "spearman": -0.032193215004679726}
+
+Binary classifiers with meta classifier:
+
+{"accuracy": 0.54421768707483, "spearman": 0.009013676075603749}
 
 Surprisal:
 

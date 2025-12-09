@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, Normalizer
 
-from embedding_pipeline import run_classification_pipeline, run_regression_pipeline
+from embedding_pipeline import compute_correlation, run_binary_classifiers, run_classification_pipeline, run_regression_pipeline
 
 
 def load_embeddings(file_path, normalize=False):
@@ -39,12 +39,16 @@ def main():
     print(len(X_train), len(y_train))
     
 
-    # use different embeddings and cosine sims? Bei
-    text_embeddings = load_embeddings('../e5smallv2-separate/embeddings_out_dev/text_only.csv')
-    meaning_embeddings = load_embeddings('../e5smallv2-separate/embeddings_out_dev/meaning_only.csv')
+    # use different embeddings and cosine sims?
+    text_embeddings = load_embeddings('../e5smallv2-separate/embeddings_out_train/text_only.csv')
+    meaning_embeddings = load_embeddings('../e5smallv2-separate/embeddings_out_train/meaning_only.csv')
 
-    format_output(run_regression_pipeline(X_train, y_train, X_dev), 'predictions_pipeline.jsonl')
-    format_output(run_classification_pipeline(X_train, y_train, X_dev), 'predictions_pipeline.jsonl')
+    #format_output(run_regression_pipeline(X_train, y_train, X_dev), 'predictions_pipeline.jsonl')
+    #format_output(run_classification_pipeline(X_train, y_train, X_dev), 'predictions_pipeline.jsonl')
+    # compute correlation
+    # correlation = compute_correlation(y_train, text_embeddings, meaning_embeddings)
+    # print(f"Correlation: {correlation}")
+    format_output(run_binary_classifiers(X_train, X_dev, y_train), 'predictions_binary_classifiers_with_meta.jsonl')
     
 
 if __name__ == "__main__":
