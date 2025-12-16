@@ -60,3 +60,12 @@ Surprisal:
 Finetuning:
 
 {"accuracy": 0.5918367346938775, "spearman": 0.2101613315469357}
+
+
+erste Ergebnisse in allen Spalten bis 5. Januar
+
+harte Deadline für einzelne Spalten: 12. Januar
+
+Finetuning Regression | Finetuning Klassifikation | simple Regression | simple Klassifikation | binären Klassifikatoren| surprisal/perplexity | generatives Modell | wordnet
+
+So dass Ergebnisse als Spalten von Zahlen in everything.csv geschrieben werden (mit Ansatz als Header)
