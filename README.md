@@ -26,7 +26,14 @@ Baseline (majority):
 
 Embeddings (meaning included in text) + Linear Regression:
 
-{"accuracy": 0.5459183673469388, "spearman": 0.01799331520799271}
+* all-Mini_L6-v2: {"accuracy": 0.5255102040816326, "spearman": 0.00656551692026338}
+* all-mpnet-base-v2: {"accuracy": 0.564625850340136, "spearman": 0.11322736541410187}
+* BAAlbge-base-en-v1.5: {"accuracy": 0.5272108843537415, "spearman": 0.014350656246544052}
+* e5-small-v2: {"accuracy": 0.5357142857142857, "spearman": 0.039004202747490446}
+* e5-base-v2: {"accuracy": 0.5068027210884354, "spearman": 0.013937386572863268}
+* nomic-embed-text: {"accuracy": 0.5714285714285714, "spearman": 0.01871672965755985}
+
+Keine Ahnung woher: {"accuracy": 0.5459183673469388, "spearman": 0.01799331520799271}
 
 Embeddings (meaning included in text) + SVC:
 
