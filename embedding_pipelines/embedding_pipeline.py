@@ -20,6 +20,12 @@ def train_binary_classifier(sklearn_classifier, X_train, y_train, class_label: i
     y_train_binary = [1 if round(label) == class_label else 0 for label in y_train]
     sklearn_classifier.fit(X_train, y_train_binary)
     return sklearn_classifier
+
+def train_frankhall_classifier(sklearn_classifier, X_train, y_train, class_label: int):
+    # Convert to binary labels
+    y_train_binary = [1 if round(label) >= class_label else 0 for label in y_train]
+    sklearn_classifier.fit(X_train, y_train_binary)
+    return sklearn_classifier
     
 
 
@@ -28,18 +34,18 @@ def run_regression_pipeline(X_train, y_train, X_dev, model=LinearRegression()):
     """Train a simple pipeline and return predictions."""
     pipeline = Pipeline([
         ('scaler', StandardScaler()),
-        ('pca', PCA(n_components=0.95)),
+        ('pca', PCA(n_components=0.95, random_state=42)),
         ('model', model)
     ])
     pipeline.fit(X_train, y_train)
     preds = pipeline.predict(X_dev)
     return preds
 
-def run_classification_pipeline(X_train, y_train, X_dev, model=SVC(kernel='linear', probability=True)):
+def run_classification_pipeline(X_train, y_train, X_dev, model=SVC(kernel='linear', probability=True, random_state=42)):
     """Train a simple classification pipeline and return predictions."""
     pipeline = Pipeline([
         ('scaler', StandardScaler()),
-        ('pca', PCA(n_components=0.95)),
+        ('pca', PCA(n_components=0.95, random_state=42)),
         ('model', model)
     ])
     rounded_y_train = [round(label) for label in y_train]
@@ -90,6 +96,29 @@ def run_binary_classifiers(X_train, X_dev, y_train):
     #     final_predictions.append(round(pred))
     final_predictions = [round(pred) for pred in final_predictions]
     return final_predictions
+
+def run_frankhall_classifiers(X_train, X_dev, y_train, classifier_type='svm'):
+    classifiers = []
+    for class_label in range(2, 6):
+        if classifier_type == 'logistic':
+            classifier = LogisticRegression(max_iter=1000, class_weight='balanced', probability=True, random_state=42)
+        else:
+            classifier = SVC(kernel='linear', class_weight='balanced', probability=True, random_state=42)
+        trained_classifier = train_frankhall_classifier(classifier, X_train, y_train, class_label)
+        classifiers.append(trained_classifier)
+    # Get probabilities for training and dev sets
+    train_probabilities = get_class_probabilities(classifiers, X_train)
+    dev_probabilities = get_class_probabilities(classifiers, X_dev)
+    # Train meta-classifier
+    meta_classifier = train_meta_classifier_from_probs(train_probabilities, y_train)
+    final_predictions = meta_classifier.predict(dev_probabilities)
+    return [round(pred) for pred in final_predictions]
+
+    # predictions = [classifiers[i].predict(X_dev) for i in range(len(classifiers))]
+    # return np.stack(predictions).sum(axis=0) + 1
+
+    
+        
 
 
 
